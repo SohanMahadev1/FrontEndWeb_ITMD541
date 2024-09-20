@@ -1,0 +1,29 @@
+name: Azure Web App Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code from GitHub repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js environment (Optional if using HTML only)
+    - name: Set up Node.js environment (Optional if using HTML only)
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    # Step 3: Deploy to Azure Web App
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'MyFirstWebApplication'  # Updated with your actual Azure Web App name
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
