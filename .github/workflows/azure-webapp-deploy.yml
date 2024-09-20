@@ -10,28 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout code from the GitHub repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Set up a .NET environment (for .NET Core/ASP.NET apps)
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v3
+    # Optional: Set up a Node.js environment if your app requires it
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v3
       with:
-        dotnet-version: '6.0.x'  # You can adjust the version depending on your app
+        node-version: '20'
 
-    # Step 3: Restore .NET dependencies (if applicable)
-    - name: Restore dependencies
-      run: dotnet restore
-
-    # Step 4: Build the .NET project
-    - name: Build the project
-      run: dotnet build --configuration Release --no-restore
-
-    # Step 5: Deploy to Azure Web App
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'MyFirstWebApplication'  # Replace with your Azure Web App name
+        app-name: 'MyFirstWebApplication'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Ensure the publish profile is added as a secret
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
